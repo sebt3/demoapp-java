@@ -21,6 +21,11 @@ public class HomeController {
 		return "/home";
 	}
 	
+	@RequestMapping(value = "/api", method = RequestMethod.GET)
+    public String displayApi(Model model) {
+		return "/api";
+	}
+	
 	@ModelAttribute
 	public FormDTO createFormBean() {
 		return new FormDTO();
@@ -39,5 +44,12 @@ public class HomeController {
 		redirectAttrs.addFlashAttribute("message", message);
 		
 		return "redirect:/";
+	}
+
+	@RequestMapping(value = "/api", method=RequestMethod.POST)
+	public String submitMessageApi(@Valid FormDTO formDTO, Model model) {
+		String message = formDTO.getMessageFromUser();
+		model.addAttribute("message",message);
+		return "/api";
 	}
 }

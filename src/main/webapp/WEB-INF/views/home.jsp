@@ -7,6 +7,14 @@
     <title>Home</title>
 </head>
 <body>
+<script>
+function callAPI() {
+	$.post("api", {"messageFromUser":$("#messageFromUser")[0].value}, function( data ) {
+		$('#message').html('The API returned: <b>'+data.message+'</b>')
+	});
+	return true	
+}
+</script>
 		<div class="hero-unit">
 			<h1>Home</h1>
 		
@@ -24,20 +32,16 @@
 				</div>
 			
 				<form:form id="form" method="post" modelAttribute="formDTO">
-			
 					<spring:message code="message.typeMessage" var="typeMessage" />
 				  	<form:input cssClass="input-block-level" path="messageFromUser" placeholder="${typeMessage}" autocomplete="off" />
-			 		
 					<form:errors path="messageFromUser" cssClass="alert alert-error" element="div"  />
-					
+				  	<button type="submit" class="btn">Submit</button>
+				  	<button type="button" class="btn" onclick='callAPI()'>API</button>
 		  			<c:if test="${not empty message}">
 						<div id="message" class="alert alert-success">
 							<spring:message code="message.youWrote" arguments="${message}" htmlEscape="true" />
 						</div>	
 					</c:if>
-					
-				  	<button type="submit" class="btn">Submit</button>
-					
 				</form:form>
 			</div>
 		</div>
